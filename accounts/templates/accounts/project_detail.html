@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>{{ project.title }} - SkillSync</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>body{font-family:'Inter',sans-serif}</style>
+</head>
+<body class="bg-[#f8f9fb]">
+
+<div class="flex min-h-screen">
+  <div class="w-[240px] bg-white border-r border-gray-200 p-5 fixed h-full">
+    <div class="flex items-center gap-2 font-extrabold text-[18px]"><div class="w-8 h-8 bg-black text-white rounded-lg flex items-center justify-center">S</div> SkillSync</div>
+    <div class="mt-7">
+      <p class="text-[10px] text-gray-400 font-bold tracking-widest mb-2">CLIENT</p>
+      <a href="{% url 'home' %}" class="flex items-center gap-2 px-3 py-2 rounded-lg text-[13px] text-gray-600 hover:bg-gray-50">Dashboard</a>
+      <a href="{% url 'post_a_project' %}" class="flex items-center gap-2 px-3 py-2 text-[13px] text-gray-600 hover:bg-gray-50 mt-1">Post a Project</a>
+      <a href="{% url 'my_projects' %}" class="flex items-center gap-2 px-3 py-2 text-[13px] text-gray-600 hover:bg-gray-50 mt-1">My Projects</a>
+      <p class="text-[10px] text-gray-400 font-bold tracking-widest mt-6 mb-2">DEVELOPER</p>
+      <a href="{% url 'my_profile' %}" class="flex items-center gap-2 px-3 py-2 text-[13px] text-gray-600 hover:bg-gray-50 rounded-lg">My Profile</a>
+      <a href="{% url 'project_for_you' %}" class="flex items-center gap-2 bg-black text-white px-3 py-2 rounded-lg text-[13px] font-medium mt-1">Projects for You</a>
+    </div>
+  </div>
+
+  <div class="flex-1 ml-[240px]">
+    <div class="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center sticky top-0 z-20">
+      <a href="{% url 'projects' %}" class="text-[13px] text-gray-500 hover:text-black">← Back to Projects</a>
+      <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center text-xs font-bold">{{ user.username|first|upper }}</div><span class="text-[13px] font-medium">{{ user.username }}</span></div>
+    </div>
+
+    <div class="p-8 max-w-[1000px] mx-auto">
+      <div class="grid grid-cols-3 gap-6">
+        <!-- Left - Project Details -->
+        <div class="col-span-2">
+          <div class="bg-white border border-gray-200 rounded-[20px] p-8">
+            <div class="flex items-start justify-between">
+              <div>
+                <div class="flex items-center gap-2"><span class="text-[11px] bg-green-50 text-green-700 border border-green-200 px-2.5 py-1 rounded-full">● {{ project.status|default:"Open" }}</span><span class="text-[11px] text-gray-400">Posted 2 hours ago • ID #{{ project.id }}</span></div>
+                <h1 class="text-[26px] font-bold tracking-tight mt-4">{{ project.title }}</h1>
+              </div>
+            </div>
+
+            <div class="mt-6">
+              <h3 class="text-[12px] font-semibold uppercase tracking-wide text-gray-400">Description</h3>
+              <p class="text-[13px] text-gray-700 leading-7 mt-3 whitespace-pre-line">{{ project.description }}</p>
+            </div>
+
+            <div class="mt-8">
+              <h3 class="text-[12px] font-semibold uppercase tracking-wide text-gray-400">Skills Required</h3>
+              <div class="flex gap-2 mt-3 flex-wrap">
+                {% for skill in project.skills_required.split|slice:"," %}
+                {% endfor %}
+                <span class="text-[12px] bg-gray-900 text-white px-3 py-1.5 rounded-full">{{ project.skills_required }}</span>
+              </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-gray-100">
+              <h3 class="text-[12px] font-semibold uppercase tracking-wide text-gray-400">About the Client</h3>
+              <div class="flex items-center gap-3 mt-3">
+                <div class="w-10 h-10 bg-gray-900 text-white rounded-full flex items-center justify-center font-bold text-sm">{{ project.client.username|first|upper }}</div>
+                <div><div class="text-[13px] font-semibold">{{ project.client.username }}</div><div class="text-[11px] text-gray-500">Verified client • 5 projects posted</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right - Action Card -->
+        <div class="col-span-1">
+          <div class="bg-white border border-gray-200 rounded-[20px] p-6 sticky top-24">
+            <div class="text-[11px] text-gray-400 uppercase tracking-wide">Budget</div>
+            <div class="text-[28px] font-bold mt-1">₹{{ project.budget }}</div>
+            <div class="text-[11px] text-gray-400">Fixed price • No negotiation</div>
+
+            <button class="w-full bg-black text-white py-3 rounded-full text-[13px] font-semibold mt-6 hover:bg-gray-800">Apply for this Project</button>
+            <button class="w-full border border-gray-200 py-3 rounded-full text-[13px] font-medium mt-2 hover:bg-gray-50">Save Project</button>
+
+            <div class="mt-6 pt-6 border-t border-gray-100 space-y-3 text-[12px]">
+              <div class="flex justify-between"><span class="text-gray-500">Proposals</span><span class="font-medium">8 proposals</span></div>
+              <div class="flex justify-between"><span class="text-gray-500">Project Type</span><span class="font-medium">Remote</span></div>
+              <div class="flex justify-between"><span class="text-gray-500">Duration</span><span class="font-medium">2-3 weeks</span></div>
+            </div>
+
+            <div class="bg-gray-50 border border-gray-100 rounded-xl p-3 mt-6 flex gap-2">
+              <div class="text-green-600">✓</div>
+              <div class="text-[11px] text-gray-600 leading-4"><span class="font-semibold">Payment protected.</span> Funds held securely until you approve.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% include 'accounts/footer.html' %}
+</body>
+</html>

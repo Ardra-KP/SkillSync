@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Developers - SkillSync</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>body{font-family:'Inter',sans-serif}</style>
+</head>
+<body class="bg-[#f8f9fb]">
+
+<div class="flex min-h-screen">
+  <div class="w-[240px] bg-white border-r border-gray-200 p-5 fixed h-full">
+    <div class="flex items-center gap-2 font-extrabold text-[18px]"><div class="w-8 h-8 bg-black text-white rounded-lg flex items-center justify-center">S</div> SkillSync</div>
+    <div class="mt-7">
+      <p class="text-[10px] text-gray-400 font-bold tracking-widest mb-2">CLIENT</p>
+      <a href="{% url 'home' %}" class="flex items-center gap-2 px-3 py-2 rounded-lg text-[13px] text-gray-600 hover:bg-gray-50">Dashboard</a>
+      <a href="{% url 'post_a_project' %}" class="flex items-center gap-2 px-3 py-2 text-[13px] text-gray-600 hover:bg-gray-50 mt-1">Post a Project</a>
+      <a href="{% url 'my_projects' %}" class="flex items-center gap-2 px-3 py-2 text-[13px] text-gray-600 hover:bg-gray-50 mt-1">My Projects</a>
+      <p class="text-[10px] text-gray-400 font-bold tracking-widest mt-6 mb-2">DEVELOPER</p>
+      <a href="{% url 'my_profile' %}" class="flex items-center gap-2 px-3 py-2 text-[13px] text-gray-600 hover:bg-gray-50 rounded-lg">My Profile</a>
+      <a href="{% url 'project_for_you' %}" class="flex items-center gap-2 px-3 py-2 text-[13px] text-gray-600 hover:bg-gray-50 rounded-lg mt-1">Find Work</a>
+    </div>
+  </div>
+
+  <div class="flex-1 ml-[240px] flex flex-col min-h-screen">
+    <div class="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center sticky top-0 z-20">
+      <div class="flex gap-6 text-[13px]"><a href="{% url 'home' %}" class="text-gray-400">Home</a><a href="{% url 'projects' %}" class="text-gray-400">Projects</a><span class="font-semibold">Developers</span></div>
+      <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center text-xs font-bold">{{ user.username|first|upper|default:"U" }}</div><span class="text-[13px] font-medium">{{ user.username|default:"unni" }}</span></div>
+    </div>
+
+    <div class="flex-1 p-8 max-w-[1200px]">
+      <div class="flex justify-between items-center mb-6">
+        <div><h1 class="text-[28px] font-bold tracking-tight">Top Developers</h1><p class="text-[13px] text-gray-500 mt-1">Vetted, interviewed and ready to start</p></div>
+        <div class="flex gap-2"><span class="px-3 py-1.5 bg-black text-white rounded-full text-[12px]">All</span><span class="px-3 py-1.5 bg-white border border-gray-200 rounded-full text-[12px]">Available Now</span><span class="px-3 py-1.5 bg-white border border-gray-200 rounded-full text-[12px]">Top Rated</span></div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-4">
+        {% for dev in developers %}
+        <div class="bg-white p-5 rounded-[16px] border border-gray-200 hover:border-black hover:shadow-md transition-all">
+          <div class="flex justify-between">
+            <div class="flex gap-3">
+              <div class="w-11 h-11 bg-gray-900 text-white rounded-full flex items-center justify-center font-bold">{{ dev.user.username|first|upper }}</div>
+              <div><div class="font-semibold text-[14px]">{{ dev.user.username }}</div><div class="text-[11px] text-gray-500">{{ dev.title|default:"Full Stack Developer" }}</div><div class="flex items-center gap-1 mt-1"><span class="text-[11px]">⭐ 4.9</span><span class="text-[10px] text-gray-400">(24 reviews)</span></div></div>
+            </div>
+            <span class="text-[10px] bg-green-50 text-green-700 border border-green-200 px-2 py-0.5 rounded-full h-fit">● Available</span>
+          </div>
+
+          <p class="text-[12px] text-gray-500 mt-4 line-clamp-2">{{ dev.bio|default:"Experienced developer passionate about building scalable products. Worked with 10+ startups."|truncatechars:90 }}</p>
+
+          <div class="flex gap-3 mt-3 text-[11px] text-gray-500">
+            <span>📍 Kochi</span><span>•</span><span>₹{{ dev.hourly_rate|default:"600" }}/hr</span>
+          </div>
+
+          <div class="flex gap-1.5 mt-3 flex-wrap">
+            {% for skill in dev.skills_list|slice:":4" %}
+              <span class="text-[11px] bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-full">{{ skill }}</span>
+            {% empty %}
+              <span class="text-[11px] bg-gray-50 border px-2.5 py-1 rounded-full">Python</span>
+              <span class="text-[11px] bg-gray-50 border px-2.5 py-1 rounded-full">Django</span>
+              <span class="text-[11px] bg-gray-50 border px-2.5 py-1 rounded-full">React</span>
+            {% endfor %}
+          </div>
+
+          <div class="flex gap-2 mt-5">
+            <a href="{% url 'post_a_project' %}?invite={{ dev.user.id }}" class="flex-1 bg-black text-white text-[12px] py-2 rounded-full font-medium hover:bg-gray-800 text-center">Invite to Project</a>
+            <a href="{% url 'developer_detail' dev.id %}" class="px-4 py-2 border border-gray-200 rounded-full text-[12px] hover:bg-gray-50 text-center">Profile</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% include 'accounts/footer.html' %}
+  </div>
+</div>
+</body>
+</html>

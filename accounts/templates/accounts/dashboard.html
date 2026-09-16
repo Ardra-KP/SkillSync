@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SkillSync - Find Perfect Developers</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+
+<!-- Navbar -->
+<nav class="bg-white shadow-sm sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold">SkillSync<span class="text-indigo-600">.</span></h1>
+    <div class="flex items-center gap-6">
+      <div class="relative">
+        <input placeholder="Search skills, projects..." class="bg-gray-100 rounded-full px-4 py-2 pl-10 w-64 text-sm">
+        <i class="fa fa-search absolute left-3 top-3 text-gray-400"></i>
+      </div>
+      <span class="text-sm">Hi, {{ user.username }} 👋</span>
+      <a href="/accounts/logout/" class="text-sm bg-black text-white px-4 py-2 rounded-full">Logout</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero + Stats -->
+<div class="max-w-7xl mx-auto px-6 py-10">
+  <div class="grid grid-cols-4 gap-6 mb-8">
+    <div class="bg-white p-5 rounded-2xl shadow-sm border"><p class="text-gray-500 text-sm">Total Developers</p><h2 class="text-3xl font-bold">500+</h2></div>
+    <div class="bg-white p-5 rounded-2xl shadow-sm border"><p class="text-gray-500 text-sm">Projects Posted</p><h2 class="text-3xl font-bold">120+</h2></div>
+    <div class="bg-white p-5 rounded-2xl shadow-sm border"><p class="text-gray-500 text-sm">Hired Successfully</p><h2 class="text-3xl font-bold">98%</h2></div>
+    <div class="bg-indigo-600 text-white p-5 rounded-2xl shadow-sm"><p class="text-sm opacity-80">Post a Project</p><h2 class="text-xl font-bold mt-1">Need a dev? <i class="fa fa-arrow-right ml-2"></i></h2></div>
+  </div>
+
+  <!-- Search Chips -->
+  <div class="flex gap-3 mb-10 flex-wrap">
+    <span class="text-sm font-semibold mr-2">Trending Skills:</span>
+    <button class="px-4 py-1.5 bg-black text-white rounded-full text-sm">All</button>
+    <button class="px-4 py-1.5 bg-white border rounded-full text-sm hover:bg-gray-100">Python</button>
+    <button class="px-4 py-1.5 bg-white border rounded-full text-sm hover:bg-gray-100">Django</button>
+    <button class="px-4 py-1.5 bg-white border rounded-full text-sm hover:bg-gray-100">React</button>
+    <button class="px-4 py-1.5 bg-white border rounded-full text-sm hover:bg-gray-100">UI/UX</button>
+    <button class="px-4 py-1.5 bg-white border rounded-full text-sm hover:bg-gray-100">Flutter</button>
+  </div>
+
+  <!-- Two Columns -->
+  <div class="grid grid-cols-3 gap-8">
+    <!-- Featured Projects - NEW ELEMENT -->
+    <div class="col-span-1">
+      <h3 class="font-bold text-lg mb-4">🔥 Featured Projects</h3>
+      {% for project in projects|slice:":3" %}
+      <div class="bg-white p-5 rounded-xl border mb-4 hover:shadow-md transition">
+        <div class="flex justify-between"><span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">{{ project.status }}</span><span class="text-xs text-gray-500">{{ project.budget }}</span></div>
+        <h4 class="font-bold mt-2">{{ project.title }}</h4>
+        <p class="text-sm text-gray-500 mt-1 line-clamp-2">{{ project.description }}</p>
+        <div class="flex gap-2 mt-3"><span class="text-xs bg-gray-100 px-2 py-1 rounded">{{ project.skills_required }}</span></div>
+      </div>
+      {% empty %}
+      <div class="bg-white p-5 rounded-xl border text-sm text-gray-500">No projects yet. Post one!</div>
+      {% endfor %}
+    </div>
+
+    <!-- Top Matched Developers - UPGRADED -->
+    <div class="col-span-2">
+      <h3 class="font-bold text-lg mb-4">✨ Top Matched Developers</h3>
+      <div class="grid grid-cols-2 gap-4">
+        {% for dev in developers %}
+        <div class="bg-white p-6 rounded-2xl border hover:shadow-lg transition group">
+          <div class="flex justify-between items-start">
+            <div class="flex gap-3">
+              <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center font-bold text-indigo-600">{{ dev.user.username|first|upper }}</div>
+              <div>
+                <h4 class="font-bold">{{ dev.user.username }}</h4>
+                <p class="text-xs text-gray-500">{{ dev.title|default:"Developer" }}</p>
+                <p class="text-xs mt-1"><i class="fa fa-location-dot text-gray-400"></i> {{ dev.location|default:"Kochi, Kerala" }}</p>
+              </div>
+            </div>
+            <span class="text-[10px] bg-green-100 text-green-600 px-2 py-1 rounded-full"><i class="fa fa-circle text-[8px]"></i> Available</span>
+          </div>
+          <div class="flex gap-2 mt-4 flex-wrap">
+            {% for skill in dev.skills|default:"Python, Django"|slice:":20" %}{% endfor %}
+            <span class="text-xs bg-gray-100 px-2.5 py-1 rounded-full">{{ dev.skills|default:"Python, Django, React" }}</span>
+          </div>
+          <div class="flex justify-between items-center mt-5">
+            <div><p class="text-xs text-gray-400">Hourly Rate</p><p class="font-bold text-sm">₹{{ dev.hourly_rate|default:"500" }}/hr ⭐ 4.9</p></div>
+            <div class="flex gap-2">
+              <a href="#" class="w-8 h-8 border rounded-full flex items-center justify-center hover:bg-black hover:text-white"><i class="fa-brands fa-github text-xs"></i></a>
+              <a href="#" class="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center text-xs">Hire</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% include 'accounts/footer.html' %}
+</body>
+</html>

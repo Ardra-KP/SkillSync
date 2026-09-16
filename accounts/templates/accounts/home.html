@@ -1,0 +1,154 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>SkillSync - Find the perfect fit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>body{font-family:'Inter',sans-serif}</style>
+</head>
+<body class="bg-[#f8f9fb]">
+
+<!-- Mobile Top Bar -->
+<div class="lg:hidden bg-white border-b border-gray-200 px-4 py-3 flex justify-between items-center sticky top-0 z-40">
+  <div class="flex items-center gap-2 font-extrabold text-[18px]">
+    <div class="w-8 h-8 bg-black text-white rounded-lg flex items-center justify-center">S</div> SkillSync
+  </div>
+  <button id="menuBtn" class="w-9 h-9 border border-gray-200 rounded-lg flex items-center justify-center text-[14px]">☰</button>
+</div>
+
+<div class="flex min-h-screen">
+  <!-- Sidebar -->
+  <div id="sidebar" class="w-[260px] lg:w-[240px] bg-white border-r border-gray-200 p-5 fixed h-full z-50 -translate-x-full lg:translate-x-0 transition-transform duration-200 top-0">
+    <div class="flex justify-between items-center">
+      <div class="flex items-center gap-2 font-extrabold text-[18px]">
+        <div class="w-8 h-8 bg-black text-white rounded-lg flex items-center justify-center">S</div> SkillSync
+      </div>
+      <button id="closeBtn" class="lg:hidden w-8 h-8 border border-gray-200 rounded-lg flex items-center justify-center">✕</button>
+    </div>
+    <div class="mt-8">
+      <p class="text-[10px] text-gray-400 font-bold tracking-widest mb-2">CLIENT</p>
+      <a href="{% url 'home' %}" class="flex items-center gap-2 bg-black text-white px-3 py-2.5 rounded-lg text-[13px] font-medium">● Dashboard</a>
+      <a href="{% url 'post_a_project' %}" class="flex items-center gap-2 px-3 py-2.5 text-[13px] text-gray-600 hover:bg-gray-50 rounded-lg mt-1">+ Post a Project</a>
+      <a href="{% url 'my_projects' %}" class="flex items-center gap-2 px-3 py-2.5 text-[13px] text-gray-600 hover:bg-gray-50 rounded-lg mt-1">My Projects</a>
+
+      <p class="text-[10px] text-gray-400 font-bold tracking-widest mt-7 mb-2">DEVELOPER</p>
+      <a href="{% url 'my_profile' %}" class="flex items-center gap-2 px-3 py-2.5 text-[13px] text-gray-600 hover:bg-gray-50 rounded-lg">My Profile</a>
+      <a href="{% url 'project_for_you' %}" class="flex items-center gap-2 px-3 py-2.5 text-[13px] text-gray-600 hover:bg-gray-50 rounded-lg mt-1">Find Work</a>
+
+      <p class="text-[10px] text-gray-400 font-bold tracking-widest mt-7 mb-2">EXPLORE</p>
+      <a href="{% url 'projects' %}" class="flex items-center gap-2 px-3 py-2.5 text-[13px] text-gray-600 hover:bg-gray-50 rounded-lg mt-1">Projects</a>
+      <a href="{% url 'developers' %}" class="flex items-center gap-2 px-3 py-2.5 text-[13px] text-gray-600 hover:bg-gray-50 rounded-lg mt-1">Developers</a>
+    </div>
+    <div class="absolute bottom-5 left-5 right-5 bg-gray-50 border border-gray-200 rounded-xl p-3">
+      <div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center text-xs font-bold">{{ user.username|first|upper|default:"U" }}</div><div><div class="text-[12px] font-semibold">{{ user.username|default:"unni" }}</div><div class="text-[10px] text-gray-500">Premium Plan</div></div></div>
+    </div>
+  </div>
+
+  <div id="overlay" class="hidden fixed inset-0 bg-black/40 z-40 lg:hidden"></div>
+
+  <!-- Main Content -->
+  <div class="flex-1 lg:ml-[240px] flex flex-col min-h-screen w-full">
+    <!-- Desktop Top Bar -->
+    <div class="hidden lg:flex bg-white border-b border-gray-200 px-8 py-4 justify-between items-center sticky top-0 z-20">
+      <div class="flex gap-6 text-[13px]"><span class="font-semibold text-black">Home</span><a href="{% url 'projects' %}" class="text-gray-400 hover:text-black">Projects</a><a href="{% url 'developers' %}" class="text-gray-400 hover:text-black">Developers</a></div>
+      <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center text-xs font-bold">{{ user.username|first|upper|default:"U" }}</div><span class="text-[13px] font-medium">{{ user.username|default:"unni" }}</span></div>
+    </div>
+
+    <div class="flex-1 p-4 lg:p-8 max-w-[1200px] w-full mx-auto">
+      <!-- HERO - Responsive -->
+      <div class="bg-white rounded-[20px] lg:rounded-[24px] border border-gray-200 p-6 lg:p-10 flex flex-col lg:flex-row justify-between lg:items-center relative overflow-hidden gap-6">
+        <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-gradient-to-br from-indigo-50 to-gray-50 rounded-full -mr-32 -mt-32 pointer-events-none"></div>
+        <div class="relative z-10 max-w-[520px] w-full">
+          <div class="inline-flex items-center gap-2 text-[11px] bg-gray-900 text-white px-3 py-1 rounded-full mb-4"><span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span> 128 developers online now</div>
+          <h1 class="text-[30px] lg:text-[42px] font-extrabold leading-[1.1] tracking-tight">Find the <span class="text-indigo-600">perfect</span> developer for your project</h1>
+          <p class="text-[13px] lg:text-[14px] text-gray-500 mt-4 leading-6">Our vetted talent network connects you with top 3% developers. Interview in 24 hours, hire in 48 hours.</p>
+          <div class="flex flex-col sm:flex-row gap-3 mt-6">
+            <a href="{% url 'post_a_project' %}" class="bg-black text-white px-6 py-3 rounded-full text-[13px] font-semibold hover:bg-gray-800 text-center">Post a Project - It's Free</a>
+            <a href="#" class="px-5 py-3 text-[13px] font-medium text-gray-600 text-center">How matching works →</a>
+          </div>
+          <div class="flex gap-6 lg:gap-8 mt-8 lg:mt-10 border-t border-gray-100 pt-6">
+            <div><div class="text-[18px] lg:text-[20px] font-bold">500+</div><div class="text-[10px] lg:text-[11px] text-gray-500 uppercase tracking-wide">Vetted Devs</div></div>
+            <div><div class="text-[18px] lg:text-[20px] font-bold">120+</div><div class="text-[10px] lg:text-[11px] text-gray-500 uppercase tracking-wide">Projects Shipped</div></div>
+            <div><div class="text-[18px] lg:text-[20px] font-bold">4.9/5</div><div class="text-[10px] lg:text-[11px] text-gray-500 uppercase tracking-wide">Avg Rating</div></div>
+          </div>
+        </div>
+        <div class="relative z-10 hidden lg:block w-[360px] shrink-0">
+          <div class="bg-gray-900 rounded-[16px] p-4 shadow-2xl">
+            <div class="flex gap-1.5 mb-4"><div class="w-3 h-3 bg-red-400 rounded-full"></div><div class="w-3 h-3 bg-yellow-400 rounded-full"></div><div class="w-3 h-3 bg-green-400 rounded-full"></div></div>
+            <div class="space-y-3">
+              <div class="h-2 bg-gray-700 rounded w-3/4"></div>
+              <div class="h-2 bg-indigo-500 rounded w-1/2"></div>
+              <div class="bg-white rounded-lg p-3 flex items-center gap-3 mt-4"><div class="w-8 h-8 bg-gray-100 rounded-full"></div><div><div class="h-2 bg-gray-900 rounded w-16 mb-1"></div><div class="h-1.5 bg-gray-300 rounded w-10"></div></div><div class="ml-auto text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Hired</div></div>
+              <div class="bg-white rounded-lg p-3 flex items-center gap-3"><div class="w-8 h-8 bg-gray-100 rounded-full"></div><div><div class="h-2 bg-gray-900 rounded w-16 mb-1"></div><div class="h-1.5 bg-gray-300 rounded w-10"></div></div><div class="ml-auto text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Interview</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex gap-2 mt-6 overflow-x-auto pb-2 scrollbar-hide">
+        <span class="text-[13px] font-semibold mr-2 mt-1.5 whitespace-nowrap">Trending:</span>
+        <button class="px-4 py-1.5 bg-black text-white rounded-full text-[12px] whitespace-nowrap">All</button>
+        <button class="px-4 py-1.5 bg-white border border-gray-200 rounded-full text-[12px] whitespace-nowrap">Python</button>
+        <button class="px-4 py-1.5 bg-white border border-gray-200 rounded-full text-[12px] whitespace-nowrap">Django</button>
+        <button class="px-4 py-1.5 bg-white border border-gray-200 rounded-full text-[12px] whitespace-nowrap">React</button>
+        <button class="px-4 py-1.5 bg-white border border-gray-200 rounded-full text-[12px] whitespace-nowrap">Flutter</button>
+      </div>
+
+      <h3 class="font-bold text-[16px] mt-8 mb-4">Top Matched Developers</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {% for dev in developers %}
+        <div class="bg-white p-5 rounded-[16px] border border-gray-200 hover:border-black hover:shadow-md transition-all">
+          <div class="flex justify-between items-start">
+            <div class="flex gap-3"><div class="w-10 h-10 bg-gray-900 text-white rounded-full flex items-center justify-center font-bold text-sm">{{ dev.user.username|first|upper }}</div><div><div class="font-semibold text-[13px]">{{ dev.user.username }}</div><div class="text-[11px] text-gray-500">{{ dev.title|default:"Full Stack Developer" }}</div></div></div>
+            <span class="text-[10px] bg-green-50 text-green-700 border border-green-200 px-2 py-0.5 rounded-full">● Available</span>
+          </div>
+          <div class="flex gap-2 mt-4 text-[11px] text-gray-500 flex-wrap"><span>📍 Kochi, IN</span><span>•</span><span>₹{{ dev.hourly_rate|default:"500" }}/hr</span><span>•</span><span>⭐ 4.9</span></div>
+          <div class="flex gap-1.5 mt-3 flex-wrap">{% for skill in dev.skills_list|slice:":3" %}<span class="text-[11px] bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-full">{{ skill }}</span>{% empty %}<span class="text-[11px] bg-gray-50 border px-2.5 py-1 rounded-full">Python</span><span class="text-[11px] bg-gray-50 border px-2.5 py-1 rounded-full">Django</span>{% endfor %}</div>
+          <div class="flex justify-between items-center mt-5">
+            <span class="text-[11px] text-gray-400">Top rated • 12 jobs</span>
+            <!-- FIXED: button -> a tag with correct pk -->
+            <a href="{% url 'developer_detail' dev.pk %}" class="bg-black text-white text-[12px] px-4 py-1.5 rounded-full hover:bg-gray-800">View Profile</a>
+          </div>
+        </div>
+        {% empty %}
+        <div class="col-span-3 text-center py-10 text-gray-400 text-[13px]">No developers found. Add developers from admin.</div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#0a0a0a] text-white mt-auto">
+      <div class="px-5 lg:px-8 py-8 lg:py-12">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          <div class="col-span-2 lg:col-span-1">
+            <div class="flex items-center gap-2 font-extrabold text-[18px]"><div class="w-7 h-7 bg-white text-black rounded-lg flex items-center justify-center">S</div> SkillSync</div>
+            <p class="text-[12px] text-gray-400 mt-3 leading-6">Hire top 3% developers.<br>Trusted by 100+ startups in Kerala.</p>
+          </div>
+          <div><h4 class="text-[10px] font-bold tracking-widest text-gray-500 uppercase mb-3">For Clients</h4><ul class="space-y-2 text-[12px] text-gray-300"><li>Post a Project</li><li>Browse Developers</li><li>My Projects</li></ul></div>
+          <div><h4 class="text-[10px] font-bold tracking-widest text-gray-500 uppercase mb-3">For Developers</h4><ul class="space-y-2 text-[12px] text-gray-300"><li>Find Work</li><li>My Profile</li><li>Success Stories</li></ul></div>
+          <div><h4 class="text-[10px] font-bold tracking-widest text-gray-500 uppercase mb-3">Made in</h4><p class="text-[12px] text-gray-300">Kochi, Kerala<br><span class="text-green-400 text-[11px]">● All systems operational</span><br><span class="text-[11px] text-gray-500 mt-2 block">© 2026 SkillSync</span></p></div>
+        </div>
+        <div class="mt-8 lg:mt-10 pt-6 border-t border-white/10 flex flex-col lg:flex-row gap-2 lg:justify-between text-[11px] text-gray-500">
+          <span>© 2026 SkillSync - Final Year Project</span>
+          <span>500+ Developers • 100+ Projects • Privacy • Terms</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const closeBtn = document.getElementById('closeBtn');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  function openMenu(){ sidebar.classList.remove('-translate-x-full'); overlay.classList.remove('hidden'); }
+  function closeMenu(){ sidebar.classList.add('-translate-x-full'); overlay.classList.add('hidden'); }
+  if(menuBtn) menuBtn.onclick = openMenu;
+  if(closeBtn) closeBtn.onclick = closeMenu;
+  if(overlay) overlay.onclick = closeMenu;
+</script>
+</body>
+</html>

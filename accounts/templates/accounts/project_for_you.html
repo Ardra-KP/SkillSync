@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head><title>Projects For You - SkillSync</title><script src="https://cdn.tailwindcss.com"></script><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"><style>body{font-family:'Inter',sans-serif}</style></head>
+<body class="bg-[#f8f9fb]">
+<div class="flex min-h-screen">
+  <aside class="w-[240px] bg-white border-r border-gray-200 p-5 fixed h-full z-20">
+    <div class="flex items-center gap-2 font-extrabold text-[18px]"><div class="w-8 h-8 bg-black text-white rounded-lg flex items-center justify-center">S</div>SkillSync</div>
+    <nav class="mt-8 space-y-1">
+      <p class="text-[10px] text-gray-400 font-bold tracking-widest mb-2 px-3">CLIENT</p>
+      <a href="/" class="block px-3 py-2 text-[13px] text-gray-600 rounded-lg">Dashboard</a>
+      <a href="/post-project/" class="block px-3 py-2 text-[13px] text-gray-600 rounded-lg">Post a Project</a>
+      <a href="/my-projects/" class="block px-3 py-2 text-[13px] text-gray-600 rounded-lg">My Projects</a>
+      <p class="text-[10px] text-gray-400 font-bold tracking-widest mt-6 mb-2 px-3">DEVELOPER</p>
+      <a href="/my-profile/" class="block px-3 py-2 text-[13px] text-gray-600 rounded-lg">My Profile</a>
+      <a href="/projects-for-you/" class="block bg-black text-white px-3 py-2 rounded-lg text-[13px]">Find Work</a>
+    </nav>
+  </aside>
+
+  <main class="flex-1 ml-[240px] flex flex-col min-h-screen">
+    <header class="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center"><h2 class="font-semibold text-[14px]">Projects For You</h2><span class="text-[13px]">{{ user.username }}</span></header>
+
+    <section class="flex-1 p-8">
+      <h1 class="text-[24px] font-bold mb-6">Available Projects</h1>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {% for project in projects %}
+        <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition">
+          <h3 class="font-semibold text-[15px]">{{ project.title }}</h3>
+          <p class="text-[12px] text-gray-500 mt-2 line-clamp-2">{{ project.description }}</p>
+          <div class="flex justify-between items-center mt-4">
+            <span class="text-[13px] font-bold">₹{{ project.budget }}</span>
+            <a href="/project/{{ project.id }}/" class="text-[12px] bg-black text-white px-4 py-2 rounded-full">View</a>
+          </div>
+        </div>
+        {% empty %}
+        <p class="text-[13px] text-gray-500">No projects yet.</p>
+        {% endfor %}
+      </div>
+    </section>
+
+    {% include 'accounts/footer.html' %}
+  </main>
+</div>
+</body>
+</html>

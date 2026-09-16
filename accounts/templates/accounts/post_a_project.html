@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Post a Project - SkillSync</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>body{font-family:'Inter',sans-serif}</style>
+</head>
+<body class="bg-[#f8f9fb]">
+<div class="flex min-h-screen">
+  <!-- Sidebar -->
+  <aside class="w-[240px] bg-white border-r border-gray-200 p-5 fixed h-full z-20">
+    <div class="flex items-center gap-2 font-extrabold text-[18px]"><div class="w-8 h-8 bg-black text-white rounded-lg flex items-center justify-center">S</div>SkillSync</div>
+    <nav class="mt-8 space-y-1">
+      <p class="text-[10px] text-gray-400 font-bold tracking-widest mb-2 px-3">CLIENT</p>
+      <a href="/" class="block px-3 py-2 text-[13px] text-gray-600 rounded-lg">Dashboard</a>
+      <a href="/post-project/" class="block bg-black text-white px-3 py-2 rounded-lg text-[13px]">Post a Project</a>
+      <a href="/my-projects/" class="block px-3 py-2 text-[13px] text-gray-600 rounded-lg">My Projects</a>
+      <p class="text-[10px] text-gray-400 font-bold tracking-widest mt-6 mb-2 px-3">DEVELOPER</p>
+      <a href="/my-profile/" class="block px-3 py-2 text-[13px] text-gray-600 rounded-lg">My Profile</a>
+      <a href="/projects-for-you/" class="block px-3 py-2 text-[13px] text-gray-600 rounded-lg">Find Work</a>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="flex-1 ml-[240px] flex flex-col min-h-screen">
+    <header class="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center">
+      <h2 class="font-semibold text-[14px]">Post a New Project</h2>
+      <span class="text-[13px]">{{ user.username }}</span>
+    </header>
+
+    <section class="flex-1 p-8 max-w-[760px]">
+      <div class="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
+        <h1 class="text-[22px] font-bold">Tell us what you need</h1>
+        <p class="text-[13px] text-gray-500 mt-1 mb-6">Get proposals from vetted developers in 24 hours</p>
+
+        <form method="POST" class="space-y-5">
+          {% csrf_token %}
+          <div><label class="text-[12px] font-semibold">Project Title</label><input name="title" placeholder="e.g. Build a Delivery App" class="w-full mt-1.5 border border-gray-200 rounded-xl px-4 py-3 text-[13px] outline-none focus:border-black" required></div>
+          <div><label class="text-[12px] font-semibold">Description</label><textarea name="description" rows="5" placeholder="Describe your project..." class="w-full mt-1.5 border border-gray-200 rounded-xl px-4 py-3 text-[13px] outline-none focus:border-black" required></textarea></div>
+          <div class="grid grid-cols-2 gap-4">
+            <div><label class="text-[12px] font-semibold">Budget (₹)</label><input name="budget" type="number" placeholder="50000" class="w-full mt-1.5 border border-gray-200 rounded-xl px-4 py-3 text-[13px] outline-none focus:border-black" required></div>
+            <div><label class="text-[12px] font-semibold">Deadline</label><input name="deadline" type="date" class="w-full mt-1.5 border border-gray-200 rounded-xl px-4 py-3 text-[13px] outline-none focus:border-black"></div>
+          </div>
+
+          <div class="bg-gray-50 border border-gray-100 rounded-xl p-4 flex gap-3">
+            <div class="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center text-xs">✓</div>
+            <div><div class="text-[12px] font-semibold">What happens next?</div><div class="text-[11px] text-gray-500 mt-0.5">We match your project with vetted developers. You'll get proposals within 24 hours.</div></div>
+          </div>
+
+          <button class="bg-black text-white w-full py-3.5 rounded-full text-[14px] font-semibold hover:bg-gray-800 transition-all">Post Project — It's Free</button>
+          <p class="text-[11px] text-center text-gray-400">No credit card required • 500+ developers waiting</p>
+        </form>
+      </div>
+    </section>
+
+    {% include 'accounts/footer.html' %}
+  </main>
+</div>
+</body>
+</html>

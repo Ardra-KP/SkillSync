@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Projects - SkillSync</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#f8f9fb]">
+
+<div style="display:flex; min-height:100vh">
+
+  <div style="width:240px; background:white; border-right:1px solid #e5e7eb; padding:20px; position:fixed; height:100%">
+    <div style="font-weight:800; display:flex; gap:8px"><div style="width:32px; height:32px; background:black; color:white; display:flex; align-items:center; justify-content:center; border-radius:8px">S</div>SkillSync</div>
+    <div style="margin-top:30px">
+      <a href="/" style="display:block; padding:8px; font-size:13px; color:#666">Dashboard</a>
+      <a href="/projects/" style="display:block; background:black; color:white; padding:8px; border-radius:8px; font-size:13px; margin-top:5px">Projects</a>
+    </div>
+  </div>
+
+  <div style="flex:1; margin-left:240px; display:flex; flex-direction:column; min-height:100vh">
+    
+    <div style="background:white; border-bottom:1px solid #e5e7eb; padding:16px 32px; display:flex; justify-content:space-between">
+      <span style="font-weight:600; font-size:14px">Projects</span>
+      <span style="font-size:13px">{{ user.username }}</span>
+    </div>
+
+    <div style="flex:1; padding:32px">
+      <h1 style="font-size:24px; font-weight:bold">Available Projects</h1>
+      <p>No projects yet</p>
+    </div>
+
+    {% include 'accounts/footer.html' %}
+    
+  </div>
+</div>
+
+</body>
+</html>
